@@ -20,12 +20,21 @@ class UploadController extends Controller
     public function index()
     {
         if (app()->isProduction()) {
-            //return redirect()->to('https://app.kanka.io');
+            abort(404);
         }
 
         return response()->json([
             'error' => 'You need to POST to this endpoint',
         ]);
+    }
+
+    public function config()
+    {
+        if (app()->isProduction()) {
+            abort(404);
+        }
+
+        phpinfo();
     }
 
     public function upload(StoreExports $request)

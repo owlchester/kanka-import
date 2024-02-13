@@ -14,4 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\UploadController::class, 'index']);
+Route::get('/config', [\App\Http\Controllers\UploadController::class, 'config']);
 Route::post('/', [\App\Http\Controllers\UploadController::class, 'upload']);
