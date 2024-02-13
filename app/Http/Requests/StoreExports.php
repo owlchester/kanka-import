@@ -28,7 +28,7 @@ class StoreExports extends FormRequest
             'files' => 'required|array',
             'files.*' => [
                 File::types(['zip']),
-                'max:256000',
+                'max:512000',
             ],
         ];
     }
