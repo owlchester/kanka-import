@@ -16,4 +16,5 @@ use Illuminate\Foundation\Events\DiagnosingHealth;
 
 Route::get('/', [\App\Http\Controllers\UploadController::class, 'index']);
 Route::get('/config', [\App\Http\Controllers\UploadController::class, 'config']);
-Route::post('/', [\App\Http\Controllers\UploadController::class, 'upload']);
+
+Route::withoutMiddleware('web')->middleware('upload')->post('/', [\App\Http\Controllers\UploadController::class, 'upload']);
