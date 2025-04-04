@@ -47,12 +47,12 @@ class UploadService
 
     protected function upload(): self
     {
-        $folder = 'campaigns/' . $this->campaign->id . '/imports';
+        $folder = 'imports/' . $this->campaign->id . '';
         /** @var UploadedFile $file */
         $files = $this->request->file('files');
         $config = [];
         foreach ($files as $file) {
-            $path = $file->storeAs($folder, uniqid() . '.zip');
+            $path = $file->storeAs($folder, uniqid() . '.zip', 'export');
             $config['files'][] = $path;
         }
         $this->campaignImport->config = $config;
