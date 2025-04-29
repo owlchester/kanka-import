@@ -3,14 +3,13 @@
 namespace App\Services;
 
 use App\Enums\CampaignImportStatus;
+use App\Enums\UserAction;
 use App\Http\Requests\StoreExports;
 use App\Jobs\Campaigns\Import;
 use App\Models\Campaign;
 use App\Models\CampaignImport;
-use Exception;
-use App\Exceptions\ValidationExeption;
+use App\Models\UserLog;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 
 class UploadService
 {
@@ -66,6 +65,24 @@ class UploadService
         $this->campaignImport->save();
 
         Import::dispatch($this->campaignImport);
+
+        $this->log();
+
+        return $this;
+    }
+
+    protected function log(): self
+    {
+        $log = new UserLog([
+            'user_id' => $this->campaignImport->user_id,
+        ]);
+        $log->type_id = UserAction::campaign;
+        $log->campaign_id = $this->campaign->id;
+        $first = [];
+        $first['module'] = 'import';
+        $first['action'] = 'queued';
+        $log->data = $first;
+        $log->save();
 
         return $this;
     }
