@@ -27,7 +27,7 @@ class StoreExports extends FormRequest
             'token' => ['required', 'integer', 'exists:campaign_imports,id'],
             'files' => 'required|array',
             'files.*' => [
-                File::types(['zip']),
+                File::types(['zip', 'csv']),
                 'max:512000',
             ],
         ];

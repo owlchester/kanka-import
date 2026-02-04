@@ -50,8 +50,13 @@ class UploadService
         /** @var UploadedFile $file */
         $files = $this->request->file('files');
         $config = [];
+
         foreach ($files as $file) {
-            $path = $file->storeAs($folder, uniqid() . '.zip', 'export');
+            if ($file->clientExtension() == 'csv') {
+                $path = $file->storeAs($folder, uniqid() . '.csv', 'export');
+            } else {
+                $path = $file->storeAs($folder, uniqid() . '.zip', 'export');
+            }
             $config['files'][] = $path;
         }
         $this->campaignImport->config = $config;
